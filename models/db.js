@@ -1,4 +1,6 @@
 const mysql = require('mysql2/promise');
+const bcrypt = require('bcryptjs');
+
 // setup dob conn pool
 const pool = mysql.createPool({
     host: 'localhost',
@@ -67,17 +69,20 @@ const initDB = async ()=> {
           ('Abdul Jobbar'),
           ('Molla Shojib'),
           ('Light Yagami'),
-          ('Rohim Mia')
+          ('Rohim Mia'),
+          ('Tyler Durden')
         `);
       }
       
       // check admin exists
       const [admins] = await conn.query('SELECT * FROM admins');
+      // hashing the default admin pass
+      const hashedPass = await bcrypt.hash('admin123',10);
       if (admins.length === 0) {  // default admin credentials 
         await conn.query(`
           INSERT INTO admins (username, password) VALUES 
-          ('admin', 'admin123') 
-        `);
+          (?,?) 
+        `,['admin',hashedPass]);
       }
       
       conn.release();
