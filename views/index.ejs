@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flash Auto Service</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../public/styles.css">
+</head>
+<body>
+  <div class="container py-5">
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Book Appointment</h2>
+          </div>
+          <div class="card-body">
+            <% if(success) { %>
+              <div class="alert alert-success" role="alert">
+                <%= success %>
+              </div>
+            <% } %>
+            
+            <% if (error) { %>
+              <div class="alert alert-danger" role="alert">
+                <%= error %>
+              </div>
+            <% } %>
+            
+            <form action="/book-appointment" method="POST" id="appointmentForm">
+              <h4 class="mb-3">Client Information</h4>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="clientName" class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="clientName" name="clientName" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="phone" class="form-label">Phone Number</label>
+                  <input type="text" class="form-control" id="phone" name="phone" required>
+                </div>
+              </div>
+              
+              <div class="mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea class="form-control" id="address" name="address" rows="2" required></textarea>
+              </div>
+              
+              <h4 class="mb-3 mt-4">Car Information</h4>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="carLicense" class="form-label">Car License Number</label>
+                  <input type="text" class="form-control" id="carLicense" name="carLicense" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="carEngine" class="form-label">Car Engine Number</label>
+                  <input type="text" class="form-control" id="carEngine" name="carEngine" required>
+                </div>
+              </div>
+              
+              <h4 class="mb-3 mt-4">Appointment Details</h4>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="appointmentDate" class="form-label">Appointment Date</label>
+                  <input type="date" class="form-control" id="appointmentDate" name="appointmentDate" required>
+                </div>
+                <div class="col-md-6">
+                  <label for="mechanicId" class="form-label">Select Mechanic</label>
+                  <select class="form-select" id="mechanicId" name="mechanicId" required>
+                    <option value="">Choose a mechanic...</option>
+                    <% mechanics.forEach(mechanic => { %>
+                      <option 
+                        value="<%= mechanic.id %>" 
+                        <%= mechanic.available_slots <= 0 ? 'disabled' : '' %>
+                      >
+                        <%= mechanic.name %> 
+                        (<%= mechanic.available_slots %> <%= mechanic.available_slots === 1 ? 'slot' : 'slots' %> available)
+                      </option>
+                    <% }); %>
+                  </select>
+                </div>
+              </div>
+              
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary" type="submit">Book Appointment</button>
+              </div>
+            </form>
+            
+            <div class="mt-4 text-center">
+              <p class="text-muted">Are you an admin? <a href="/admin/login">Login here</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../public/formValidation.js" type="module"></script>
+</body>
+</html>
