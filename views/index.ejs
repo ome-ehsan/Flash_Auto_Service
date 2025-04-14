@@ -17,13 +17,13 @@
           </div>
           <div class="card-body">
             <% if(success) { %>
-              <div class="alert alert-success" role="alert">
+              <div class="alert alert-success fade show" role="alert">
                 <%= success %>
               </div>
             <% } %>
             
             <% if (error) { %>
-              <div class="alert alert-danger" role="alert">
+              <div class="alert alert-danger fade show" role="alert">
                 <%= error %>
               </div>
             <% } %>
@@ -94,7 +94,18 @@
       </div>
     </div>
   </div>
-  
+
+  <script>
+    // JS to handle fading notification effect
+    setTimeout(() => {
+      const alerts = document.querySelectorAll('.alert');
+      alerts.forEach(alert => {
+        alert.classList.remove('show');
+        alert.classList.add('fade');
+        setTimeout(() => alert.remove(), 500);
+      });
+    }, 3000);
+  </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   <script src="../public/formValidation.js" type="module"></script>
 </body>

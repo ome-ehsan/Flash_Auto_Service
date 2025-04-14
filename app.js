@@ -4,11 +4,9 @@ const session = require('express-session');
 //const bodyParser = require('body-parser');
 
 
-// Import routes
+// Importing routes
 const indexRoutes = require('./routes/index');
 const adminRoutes = require('./routes/admin');
-
-// Initialize Express
 const app = express();
 const PORT = 8000;
 app.set('view engine', 'ejs');   // template engine for rendering embedded JS

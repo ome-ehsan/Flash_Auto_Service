@@ -21,10 +21,11 @@ router.get('/login', (req, res) => {
 // admin login
 router.post('/login', async(req, res) => {
   const { username, password } = req.body;
-  
+  console.log(req.body)
   try {
-    const [admin] = await db.query('SELECT * FROM admins WHERE username = ?' 
+    const [admin] = await db.query('SELECT * FROM admins WHERE username = ?', 
       [username]);
+    
     if (admin.length > 0) {
             // check whether pass is correct
         const isCorrectPass = await bcrypt.compare(password, admin[0].password);
